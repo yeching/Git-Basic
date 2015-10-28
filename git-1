@@ -1,0 +1,158 @@
+目录：
+一. "git - 简明指南"  原文：http://www.runoob.com/manual/git-guide/
+    以及个人的一些记录
+二.  GitHub 语法命令
+三. 常见的一些问题
+##############################################################################
+一.下面是 "git - 简明指南"  原文：http://www.runoob.com/manual/git-guide/
+   以及个人的一些记录
+##############################################################################
+1.创建新仓库
+	创建新文件夹：mkdir test
+	打开，然后执行:
+		cd test/
+		git init
+	以创建新的 git 仓库。
+##############################################################################
+2.检出仓库
+
+	执行如下命令以创建一个本地仓库的克隆版本：
+	git clone /path/to/repository
+	如果是远端服务器上的仓库，你的命令会是这个样子：
+	git clone username@host:/path/to/repository
+##############################################################################
+3.工作流
+
+	你的本地仓库由 git 维护的三棵“树”组成。第一个是你的 工作目录，它持有实际文件；第二个是 暂存区（Index），它像个缓存区域，临时保存你的改动；
+	最后是 HEAD，它指向你最后一次提交的结果。
+-------------------------------------------------------------------------------------------------	
+工作流解释实例：
+	  1.当是空文件夹时（现在位于/test/test3/）
+			yeqing@www:~/test/test3$ git status
+			位于分支 master
+			初始提交
+			无文件要提交（创建/拷贝文件并使用 "git add" 建立跟踪）
+-------------------------------------------------------------------------------------------------	
+	  2.新建一个 t3.txt 文档后
+			yeqing@www:~/test/test3$ git status
+			位于分支 master
+			初始提交
+			未跟踪的文件:
+			  （使用 "git add <文件>..." 以包含要提交的内容）
+				t3.txt
+			提交为空，但是存在尚未跟踪的文件（使用 "git add" 建立跟踪）
+-------------------------------------------------------------------------------------------------	
+	  3.使用git add t3.txt --->保存到暂存区
+			yeqing@www:~/test/test3$ git add t3.txt 
+			yeqing@www:~/test/test3$ git status
+			位于分支 master
+			初始提交
+			要提交的变更：
+			  （使用 "git rm --cached <文件>..." 撤出暂存区）
+				新文件:       t3.txt
+-------------------------------------------------------------------------------------------------	
+	   4.使用git commit -m 'xxx'	  --->提交到本地仓库	
+			yeqing@www:~/test/test3$ git commit -m 'new t3.txt'
+			[master （根提交） 0ec7cc3] new t3.txt
+			 1 file changed, 23 insertions(+)
+			 create mode 100644 t3.txt
+
+工作流程：  工作目录--->暂存区（index）--->HEAD(也就到本地仓库了)
+##############################################################################
+4.添加和提交
+
+	你可以提出更改（把它们添加到暂存区），使用如下命令：
+	git add <filename>
+	git add *
+	这是 git 基本工作流程的第一步；使用如下命令以实际提交改动：
+	git commit -m "代码提交信息"
+	现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。
+##############################################################################
+5.推送改动
+
+	你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库：
+	git push origin master
+	可以把 master 换成你想要推送的任何分支。
+
+	如果你还没有克隆现有仓库，并欲将你的仓库连接到某个远程服务器，你可以使用如下命令添加：
+	git remote add origin <server>  
+	如此你就能够将你的改动推送到所添加的服务器上去了。
+##############################################################################
+6.分支
+
+	分支是用来将特性开发绝缘开来的。在你创建仓库的时候，master 是“默认的”分支。在其他分支上进行开发，完成后再将它们合并到主分支上。 
+	创建一个叫做“feature_x”的分支，并切换过去：
+		创建分支：git branch feature_x    
+		切换分支：git checkout  feature_x
+	切换回主分支：
+		git checkout master
+	再把新建的分支删掉：
+		git branch -d feature_x
+	除非你将分支推送到远端仓库，不然该分支就是 不为他人所见的：
+		git push origin <branch>
+##############################################################################
+7.更新与合并
+
+	要更新你的本地仓库至最新改动，执行：
+	git pull
+	以在你的工作目录中 获取（fetch） 并 合并（merge） 远端的改动。
+
+	要合并其他分支到你的当前分支（例如 master），执行：
+	git merge <branch>
+	在这两种情况下，git 都会尝试去自动合并改动。遗憾的是，这可能并非每次都成功，并可能出现冲突（conflicts）。 这时候就需要你修改这些文件来手动
+	合并这些冲突（conflicts）。改完之后，你需要执行如下命令以将它们标记为合并成功：
+	git add <filename>
+	在合并改动之前，你可以使用如下命令预览差异：
+	git diff <source_branch> <target_branch>
+##############################################################################
+8.替换本地改动
+
+	假如你操作失误（当然，这最好永远不要发生），你可以使用如下命令替换掉本地改动：
+	git checkout -- <filename>
+	此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到暂存区的改动以及新文件都不会受到影响。
+
+	假如你想丢弃你在本地的所有改动与提交，可以到服务器上获取最新的版本历史，并将你本地主分支指向它：
+	git fetch origin
+	git reset --hard origin/master
+
+##############################################################################
+二.  GitHub 语法命令
+##############################################################################
+GitHub  GIT CHEAT SHEET 参考：http://www.runoob.com/manual/github-git-cheat-sheet.pdf
+
+##############################################################################
+三. 常见的一些问题
+##############################################################################
+1.避免每次git push 输入密码
+	git-ssh 和git-https在版本库的SSH方式和HTTPS方式是不同的
+	具体来说就是url信息的不同，但是，实际的认证机制也是不同的。当建立了本机密钥之后，使用ssh
+	方式实际上是不需要再次认证的，而https则每次需要输入密码 。《Help.GitHub - SSH key passphrases》
+	里也说了用SSH更方便更安全，不需要去输入长长的密码。
+
+我去看了下repo目录下的.git/config，果然，我的url是HTTPS形式。
+	[remote "origin"]
+	fetch = + refs/heads/*:refs/remotes/origin/*
+	url = https://username@github.com/username/projectname.git
+
+因为远程版本库的url是HTTPS，估计是我git clone的时候用HTTPS链接造成的
+所以问题就出在这了，每次都很不方便，都要输入用户名和密码。
+为了使用SSH公钥的方式认证，我把config的url改成下面这样
+	[remote "origin"]
+	fetch = + refs/heads/*:refs/remotes/origin/*
+	url = git@github.com:username/projectname.git
+这样我git push的时候又可以用SSH公钥认证而不用去输入用户名和密码，不仅方便，而且更安全。
+2.如果使用git远程推送时出现如下问题：
+	yeqing@www:~/GitHub/python$ git push -u origin master
+	ssh: connect to host github.com port 22: Connection timed out
+	fatal: Could not read from remote repository.
+	Please make sure you have the correct access rights
+	and the repository exists.
+可以采用如下方法：
+yeqing@www:~/.ssh$ vim .ssh/config
+Host github.com
+User yeching
+Hostname ssh.github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa
+Port 443
+
