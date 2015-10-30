@@ -1,0 +1,38 @@
+#################################################
+目录：
+	1.UTF-8字符集
+	2.常用一些配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Git的中文支持
+目前中文用户最关心的问题是：是否可以在提交说明中使用中文？是否可以使用中文文件名或目录名？是否可以使用中文来命名分支或里程碑？简单地说，可以在提交说明中使用中文，但是需要对Git进行设置。至于用中文来命名文件，目录和引用，只有在使用UTF-8字符集的环境下（Linux，Mac OS X，Windows下的Cygwin）才可以，否则应尽量避免使用。
+1. UTF-8字符集
+
+	Linux平台的中文用户一般会使用UTF-8字符集，Git在UTF-8字符集下可以工作得非常好：
+    在提交时，可以在提交说明中输入中文。
+    显示提交历史，能够正常显示提交说明中的中文字符。
+    可以添加名称为中文的文件，并可以在同样使用UTF-8字符集的Linux环境中克隆和检出。
+    可以创建带有中文字符的里程碑名称。
+	但是，在默认设置下，中文文件名在工作区状态输出，查看历史更改概要，以及在补丁文件中，文件名的中文不能正确地显示，而是显示为八进制的字符编码，
+示例如下：	
+	$ git status -s
+	?? "\350\257\264\346\230\216.txt\n
+	$ printf "\350\257\264\346\230\216.txt\n"
+	说明.txt
+
+解决方法：
+	通过将Git配置变量 core.quotepath 设置为false，就可以解决中文文件名称在这些Git命令输出中的显示问题，示例：
+	$ git config --global core.quotepath false
+	$ git status -s
+	?? 说明.txt
+---------------------------------------------------------------------------------
+2.常用一些配置
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+
+$ git config --global core.editor emacs
+$ git config --global color.ui false or true 
+	color.branch
+	color.diff
+	color.interactive
+	color.status
+$ git config --global color.diff.meta "blue black bold"
