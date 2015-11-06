@@ -147,6 +147,7 @@ GitHub  GIT CHEAT SHEET 参考：http://www.runoob.com/manual/github-git-cheat-s
 	fatal: Could not read from remote repository.
 	Please make sure you have the correct access rights
 	and the repository exists.
+可能是ssh出现问题，可以重启一下 /etc/init.d/ssh restart
 可以采用如下方法：
 yeqing@www:~/.ssh$ vim .ssh/config
 Host github.com
